@@ -19,6 +19,9 @@ hpc_all <-
 # subset to dates: 2007-02-01 and 2007-02-02
 hpc <- subset(hpc_all, Date == "1/2/2007" | Date == "2/2/2007")
 
+# open PNG graphical device
+png(filename = "plot1.png",  type = "quartz")
+
 # plot the histogram of "Global Active Power"
 hist(
   hpc$Global_active_power,
@@ -27,6 +30,5 @@ hist(
   main = "Global Active Power"
 )
 
-# copy from screen device to png file
-dev.copy(png, "plot1.png", width = 480, height = 480)
+# close graphical device
 dev.off()

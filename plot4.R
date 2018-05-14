@@ -1,3 +1,11 @@
+# download and unzip the data file
+if (!file.exists("household_power_consumption.txt")) {
+  fileUrl <-
+    "https://d396qusza40orc.cloudfront.net/exdata%2Fdata%2Fhousehold_power_consumption.zip"
+  download.file(fileUrl, destfile = "household_power_consumption.zip")
+  unzip(zipfile = "household_power_consumption.zip")
+}
+
 # read in data file
 hpc_all <-
   read.table(
@@ -14,7 +22,10 @@ hpc <- subset(hpc_all, Date == "1/2/2007" | Date == "2/2/2007")
 # convert date and time
 hpc$datetime <- strptime(paste(hpc$Date, hpc$Time), "%d/%m/%Y %H:%M:%S")
 
-# set parameters
+# open PNG graphical device
+png(filename = "plot4.png", type = "quartz")
+
+# set graphical parameters
 par(mfrow = c(2, 2))
 
 # plot global active power vs. time
@@ -33,6 +44,5 @@ legend("topright", lty = 1, bty = "n", col = c("black", "red", "blue"), legend =
 # plot global reactive power vs. time
 with(hpc, plot(datetime, Global_reactive_power, type = "l"))
 
-# copy from screen device to png file
-dev.copy(png, "plot4.png", width = 480, height = 480)
+# close graphical device
 dev.off()
